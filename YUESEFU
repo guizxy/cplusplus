@@ -1,0 +1,49 @@
+#include "looplink.h"
+//1.创建头结点
+linklist *loop_create(int data)
+{
+	linklist *L = (linklist*)malloc(sizeof(linklist));
+	if(L==NULL)
+	{
+		printf("申请空间失败\n");
+		return NULL;
+	}
+	L->data = data;
+	L->next = L;
+	return L;
+}
+//2.申请结点
+linklist *node_create(int in_data)
+{
+	linklist *p = (linklist *)malloc(sizeof(linklist));
+	if (p==NULL)
+	{
+		printf("结点申请失败\n");
+		return NULL;
+	}
+	p->data = in_data;
+	p->next = NULL;
+	return p;
+}
+//3.尾插
+int insert_tail(linklist *L,int in_data)
+{
+	if (L==NULL)
+	{
+		printf("入参为空\n");
+		return -1;
+	}
+	linklist *p = node_create(in_data);
+	if (p==NULL)
+	{
+		return -2;
+	}
+	linklist *tail = L->next;
+	while (tail->next!=L)
+	{
+		tail = tail->next;
+	}
+	p->next = tail->next;
+	tail->next = p;
+	return 0;
+}
